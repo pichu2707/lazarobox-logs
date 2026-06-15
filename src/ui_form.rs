@@ -78,6 +78,12 @@ impl FormState {
             _ => String::new(),
         };
 
+        // En modo Local el primer campo visible es LogPath, no Ip
+        let active_field = match mode {
+            ConnectionMode::Local => FormField::LogPath,
+            _                    => FormField::Ip,
+        };
+
         Self {
             config: ConnectionConfig {
                 mode,
@@ -86,7 +92,7 @@ impl FormState {
                 key_path,
                 ..Default::default()
             },
-            active_field:  FormField::Ip,
+            active_field,
             error_message: None,
         }
     }
